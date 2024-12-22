@@ -1,46 +1,37 @@
-int gameState = 0;
+class Game {
 
-void setup() {
-    size(400, 400);
-}   
+  private int level; // The current level
+  private float rectX, rectY, rectWidth, rectHeight; // Rectangle properties
 
-void draw(){
-  switch(gameState){
-  case 0:
-    drawMenu();
-    break;
-  case 1:
-    drawGame();
-    break;
-  case 2:
-    drawEnd();
-    break;
+  Game(int level) {
+    this.level = level;
+    rectX = width / 2;
+    rectY = height / 2;
+    rectWidth = 100;
+    rectHeight = 100;
   }
-}
 
-boolean imRechteck(int px, int py, int rx, int ry, int rw, int rh){
-  return (px>rx && px < rx+rw && py > ry && py < ry +rh);
-}
-
-void drawMenu(){
-    background(0);
+  public void drawGame() {
+    background(50, 150, 50); // Game background
     fill(255);
-    text("Menu", width/2, height/2-200);
-    fill(255,0,0);
-    if(imRechteck(mouseX, mouseY, width/2-100, height/2-50, 200,100)){
-        fill(255,0,0);
-    } else {
-        fill(255);
-    }
-    rect(width/2-100, height/2-50,200,100);
-    fill(0);
-    text("Start",width/2,height/2);
-}
+    textSize(24);
+    text("Game is running! Level: " + level, width / 2, height / 2 - 150);
 
-void drawGame(){
-    //TODO
-}
+    // Draw a rectangle as part of the game
+    rectMode(CENTER);
+    fill(255, 0, 0);
+    rect(rectX, rectY, rectWidth, rectHeight);
 
-void drawEnd(){
-    //TODO
+    // Placeholder for more game logic
+  }
+
+  private int getLevel(){
+    return this.level;
+  }
+
+  public void nextLevel(){
+    this.level++;
+  }
+
+  // Add other game logic methods if needed
 }
