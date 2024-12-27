@@ -20,7 +20,7 @@ void draw() {
       drawMenu();
       break;
     case GAME:
-      
+      drawGame();
       break;
     case END:
       drawEnd();
@@ -52,43 +52,30 @@ private void drawMenu() {
   textAlign(CENTER, CENTER);
   text("Start Game", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
 
+
+  if( mouseX > buttonX && mouseX < buttonX + buttonWidth && 
+      mouseY > buttonY && mouseY < buttonY + buttonHeight){
+        fill(255,0,0);
+        rect(buttonX, buttonY, buttonWidth, buttonHeight, 10);
+
+        // Button Text
+        fill(255);
+        textSize(24);
+        textAlign(CENTER, CENTER);
+        text("Start Game", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
+
+      }
   // Check if the button is clicked
   if (mousePressed && 
       mouseX > buttonX && mouseX < buttonX + buttonWidth && 
       mouseY > buttonY && mouseY < buttonY + buttonHeight) {
     currentState = GameState.GAME;
+
   }
 }
 
 private void drawEnd(){
-  // Draw Game Title
-  fill(0);
-  textSize(48);
-  textAlign(CENTER, CENTER);
-  text("My Game Title", width / 2, height / 4);
-
-  // Draw Button
-  float buttonX = width / 2 - 100;
-  float buttonY = height / 2;
-  float buttonWidth = 200;
-  float buttonHeight = 50;
-
-  // Button Background
-  fill(100, 150, 200);
-  rect(buttonX, buttonY, buttonWidth, buttonHeight, 10);
-
-  // Button Text
-  fill(255);
-  textSize(24);
-  textAlign(CENTER, CENTER);
-  text("End Game", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
-
-  // Check if the button is clicked
-  if (mousePressed && 
-      mouseX > buttonX && mouseX < buttonX + buttonWidth && 
-      mouseY > buttonY && mouseY < buttonY + buttonHeight) {
-    currentState = GameState.GAME;
-  }
+ 
 }
 
 private void drawGame(){
@@ -96,7 +83,6 @@ private void drawGame(){
   player.move();
   player.display();
   base.drawBase(width/2, height/2, 100);
-
 }
 
 
