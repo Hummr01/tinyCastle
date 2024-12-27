@@ -20,10 +20,7 @@ void draw() {
       drawMenu();
       break;
     case GAME:
-      background(200);
-      player.move();
-      player.display();
-      base.drawBase(width/2, height/2, 100);
+      
       break;
     case END:
       drawEnd();
@@ -92,6 +89,14 @@ private void drawEnd(){
       mouseY > buttonY && mouseY < buttonY + buttonHeight) {
     currentState = GameState.GAME;
   }
+}
+
+private void drawGame(){
+  background(200);
+  player.move();
+  player.display();
+  base.drawBase(width/2, height/2, 100);
+
 }
 
 
