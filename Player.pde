@@ -2,6 +2,7 @@ class Player {
   float x, y;
   float speed = 3;
   int resources = 0;
+  int playerDamage = 5; 
 
   boolean up, down, left, right; // Declare these variables
 
@@ -41,5 +42,44 @@ class Player {
     if (key == 's' || key == 'S') down = false;
     if (key == 'a' || key == 'A') left = false;
     if (key == 'd' || key == 'D') right = false;
+  }
+
+  void displayResources(int x, int y){
+    fill(0);
+    text("Coins: " + this.resources, x-x*0.1, y-y*0.05);
+  }
+
+  void addResources(int resources){
+    this.resources += resources;
+  }
+}
+
+ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+
+class Projectile {
+  float x, y, angle, speed = 5;
+  int damage = 20;
+
+  Projectile(float x, float y, float angle) {
+    this.x = x;
+    this.y = y;
+    this.angle = angle;
+  }
+
+  void move() {
+    x += cos(angle) * speed;
+    y += sin(angle) * speed;
+  }
+
+  void display() {
+    fill(255, 255, 0);
+    ellipse(x, y, 10, 10);
+  }
+}
+
+void mousePressed() {
+  if (currentState == GameState.GAME) {
+    float angle = atan2(mouseY - player.y, mouseX - player.x);
+    projectiles.add(new Projectile(player.x, player.y, angle));
   }
 }
