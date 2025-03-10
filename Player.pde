@@ -1,6 +1,7 @@
 class Player {
   float x, y;
   float speed = 3;
+  int resources = 0;
 
   Player(float x, float y) {
     this.x = x;

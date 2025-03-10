@@ -1,4 +1,5 @@
 // Global variables
+ArrayList<Resource> resources = new ArrayList<Resource>();
 Player player;
 Base base;
 boolean up, down, left, right;
@@ -10,8 +11,12 @@ enum GameState{
 
 void setup() {
   size(800, 800);
-  player = new Player(width/2, height/2);
-  base = new Base();
+  player = new Player(width/2, height/2+80);
+  base = new Base(3);
+  
+  for (int i = 0; i < 10; i++) {
+    resources.add(new Resource(random(width), random(height)));
+  }
 }
 
 void draw() {
@@ -82,8 +87,6 @@ private void drawGame(){
   background(200);
   player.move();
   player.display();
-  base.drawBase(width/2, height/2, 100);
+  base.drawBase();
+  
 }
-
-
-
