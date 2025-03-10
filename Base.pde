@@ -2,7 +2,7 @@ class Base{
     int currentHealth = 100;
     int maxHealth = 100;
     int level = 0; 
-
+    boolean destroyed = false;
 
     Base(int level){
         this.level = level;
@@ -70,4 +70,10 @@ void heal(int healAmount){
     }
 }
 
+void takeDamage(int damage){
+    this.currentHealth -= damage;
+    if(this.currentHealth <= 0 ){
+        this.destroyed = true;
+    }
+}
 }

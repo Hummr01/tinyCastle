@@ -3,9 +3,15 @@ class Player {
   float speed = 3;
   int resources = 0;
 
+  boolean up, down, left, right; // Declare these variables
+
   Player(float x, float y) {
     this.x = x;
     this.y = y;
+    up = false;
+    down = false;
+    left = false;
+    right = false;
   }
 
   void move() {
@@ -22,18 +28,18 @@ class Player {
     fill(0, 0, 255);
     ellipse(x, y, 20, 20);
   }
-}
 
-void keyPressed() {
-  if (key == 'w' || key == 'W') up = true;
-  if (key == 's' || key == 'S') down = true;
-  if (key == 'a' || key == 'A') left = true;
-  if (key == 'd' || key == 'D') right = true;
-}
+  void keyPressed() {
+    if (key == 'w' || key == 'W') up = true;
+    if (key == 's' || key == 'S') down = true;
+    if (key == 'a' || key == 'A') left = true;
+    if (key == 'd' || key == 'D') right = true;
+  }
 
-void keyReleased() {
-  if (key == 'w' || key == 'W') up = false;
-  if (key == 's' || key == 'S') down = false;
-  if (key == 'a' || key == 'A') left = false;
-  if (key == 'd' || key == 'D') right = false;
+  void keyReleased() {
+    if (key == 'w' || key == 'W') up = false;
+    if (key == 's' || key == 'S') down = false;
+    if (key == 'a' || key == 'A') left = false;
+    if (key == 'd' || key == 'D') right = false;
+  }
 }

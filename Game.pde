@@ -1,27 +1,28 @@
 // Global variables
-ArrayList<Resource> resources = new ArrayList<Resource>();
 Player player;
 Base base;
-boolean up, down, left, right;
 private GameState currentState = GameState.MENU;
+ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-enum GameState{
+enum GameState {
   MENU, GAME, END
 }
 
 void setup() {
   size(800, 800);
-  player = new Player(width/2, height/2+80);
+  player = new Player(width / 2, height / 2 + 80);
   base = new Base(3);
-  
-  for (int i = 0; i < 10; i++) {
-    resources.add(new Resource(random(width), random(height)));
+  // Create some initial enemies
+  for (int i = 1; i < 5; i++) {
+    float randomX = random(width);
+    float randomY = random(height);
+    enemies.add(new Enemy(0, randomX, randomY));
   }
 }
 
 void draw() {
   switch (currentState) {
-    case MENU :
+    case MENU:
       drawMenu();
       break;
     case GAME:
@@ -31,7 +32,6 @@ void draw() {
       drawEnd();
       break;
   }
-  
 }
 
 private void drawMenu() {
@@ -57,36 +57,59 @@ private void drawMenu() {
   textAlign(CENTER, CENTER);
   text("Start Game", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
 
+  if (mouseX > buttonX && mouseX < buttonX + buttonWidth &&
+      mouseY > buttonY && mouseY < buttonY + buttonHeight) {
+    fill(255, 0, 0);
+    rect(buttonX, buttonY, buttonWidth, buttonHeight, 10);
 
-  if( mouseX > buttonX && mouseX < buttonX + buttonWidth && 
-      mouseY > buttonY && mouseY < buttonY + buttonHeight){
-        fill(255,0,0);
-        rect(buttonX, buttonY, buttonWidth, buttonHeight, 10);
-
-        // Button Text
-        fill(255);
-        textSize(24);
-        textAlign(CENTER, CENTER);
-        text("Start Game", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
-
-      }
+    // Button Text
+    fill(255);
+    textSize(24);
+    textAlign(CENTER, CENTER);
+    text("Start Game", buttonX + buttonWidth / 2, buttonY + buttonHeight / 2);
+  }
   // Check if the button is clicked
-  if (mousePressed && 
-      mouseX > buttonX && mouseX < buttonX + buttonWidth && 
+  if (mousePressed &&
+      mouseX > buttonX && mouseX < buttonX + buttonWidth &&
       mouseY > buttonY && mouseY < buttonY + buttonHeight) {
     currentState = GameState.GAME;
-
   }
 }
 
-private void drawEnd(){
- 
+private void drawEnd() {
+  // Draw Game Title
+  fill(0);
+  textSize(48);
+  textAlign(CENTER, CENTER);
+  text("Game Over", width / 2, height / 4);
+  
 }
 
-private void drawGame(){
+private void drawGame() {
   background(200);
   player.move();
   player.display();
   base.drawBase();
-  
+   // Move and display enemies
+  for (int i = enemies.size() - 1; i >= 0; i--) { //Iterate backwards to safely remove enemies
+    Enemy enemy = enemies.get(i);
+    enemy.move();
+    enemy.display();
+
+    // Enemies Hit Base 
+      if (dist(enemy.x, enemy.y, width / 2, height / 2) < enemy.size/2) {
+      base.takeDamage(enemy.damage);
+        if(base.destroyed){
+          currentState = GameState.END; 
+      }
+    }
+}
+}
+
+void keyPressed() {
+  player.keyPressed(); // Call the player's keyPressed method
+}
+
+void keyReleased() {
+  player.keyReleased(); // Call the player's keyReleased method
 }
