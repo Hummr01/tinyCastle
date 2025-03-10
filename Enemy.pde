@@ -14,12 +14,12 @@ class Enemy{
         case 1:
             this.health = 40; 
             this.damage = 20; 
-            this.speed = 4.5; 
+            this.speed = 1.5; 
             int size = 15;
             break;
         
         default:
-            this.speed = 2; 
+            this.speed = 1; 
             break;
         }
     }
