@@ -52,4 +52,8 @@ class WaveManager {
     String getWaveStatus() {
         return waveInProgress ? "Wave " + waveNumber + " -" : "Next Wave:";
     }
+    
+    int getWaveNumber(){
+        return waveNumber; 
+    }
 }

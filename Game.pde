@@ -117,6 +117,7 @@ private void drawEnd() {
   textSize(48);
   textAlign(CENTER, CENTER);
   text("Game Over", width / 2, height / 4);
+  text("Reached Wave: " + waveManager.getWaveNumber(), width/2, height- height/4);
   
 }
 void keyPressed() {
