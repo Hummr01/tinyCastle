@@ -76,4 +76,8 @@ void takeDamage(int damage){
         this.destroyed = true;
     }
 }
+
+void update(){
+    drawBase();
+}
 }
