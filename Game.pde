@@ -53,6 +53,7 @@ void update(GameState currentState) {
       base.update();
       waveManager.update();
       processEnemies();
+      displayResources();
       displayWaveTimer();
       break;
     case END:
@@ -60,6 +61,13 @@ void update(GameState currentState) {
       break;
   }
 }
+
+private void displayResources(){
+  fill(0);
+  textAlign(RIGHT, BOTTOM);
+  text("Ressources: " + player.resources, width-10, height-10);
+}
+
 
 private void drawMenu() {
   // Draw Game Title

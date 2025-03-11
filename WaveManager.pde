@@ -1,8 +1,8 @@
 class WaveManager {
     int waveNumber;
     int waveStartTime;
-    int waveDuration = 600; // 10 seconds (assuming 60 FPS)
-    int initialDelay = 300; // 5 seconds delay before first wave
+    int waveDuration = 600*3; // 10 seconds (assuming 60 FPS)
+    int initialDelay = 600; // 5 seconds delay before first wave
     boolean waveInProgress;
 
     WaveManager() {
@@ -15,7 +15,7 @@ class WaveManager {
         if (!waveInProgress && frameCount >= waveStartTime + initialDelay) {
             startWave();
         }
-        if (waveInProgress && frameCount >= waveStartTime + waveDuration) {
+        if (waveInProgress && frameCount >= waveStartTime + waveDuration || enemies.isEmpty() && waveInProgress) {
             endWave();
         }
     }
