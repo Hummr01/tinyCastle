@@ -72,7 +72,6 @@ class Player {
 
   // When mouse is pressed, projectiles are created
   void mousePressed() {
-    println("Pressed");
     if (currentState == GameState.GAME) {
       float angle = atan2(mouseY - y, mouseX - x);
       Projectile projectile = new Projectile(x, y, angle, this);  // Pass current player to projectile
