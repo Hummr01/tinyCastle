@@ -5,12 +5,13 @@ class Tower {
     int fireRate; // Frames between shots
     int lastFireTime;
     int level;
+    int size = 30;
     ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
     Tower(float x, float y) {
         this.x = x;
         this.y = y;
-        this.range = 150;
+        this.range = 50;
         this.damage = 20;
         this.fireRate = 60; // 1 shot per second
         this.lastFireTime = 0;
@@ -19,14 +20,18 @@ class Tower {
 
     void display() {
         fill(100);
-        ellipse(x, y, 30, 30);
+        ellipse(x, y, size, size);
         noFill();
         stroke(255, 0, 0, 50); // Visual range indicator
         ellipse(x, y, range * 2, range * 2);
         stroke(0);
+        textAlign(CENTER,CENTER);
+        fill(0);
+        text(this.level, x,y);
     }
 
     void update(ArrayList<Enemy> enemies) {
+        mousePressed();
         // Find the closest enemy within range
         Enemy target = findTarget(enemies);
 

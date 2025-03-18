@@ -14,6 +14,7 @@ class WaveManager {
     void update() {
         if (!waveInProgress && frameCount >= waveStartTime + initialDelay) {
             startWave();
+            resources = new ArrayList<Resource>();
         }
         if (waveInProgress && frameCount >= waveStartTime + waveDuration || enemies.isEmpty() && waveInProgress) {
             endWave();
