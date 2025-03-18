@@ -1,5 +1,9 @@
+import java.util.Iterator;
+
 WaveManager waveManager;
 ArrayList<Enemy> enemies;
+ArrayList<Tower> towers = new ArrayList<Tower>();
+ArrayList<Resource> resources = new ArrayList<Resource>();
 Player player;
 Base base;
 enum GameState { MENU, GAME, END };
@@ -52,14 +56,23 @@ void update(GameState currentState) {
       player.update();
       base.update();
       waveManager.update();
+      displayTowers();
       processEnemies();
       displayResources();
       displayWaveTimer();
+      drawDropedResources();
       break;
     case END:
       drawEnd();
       break;
   }
+}
+
+private void displayTowers(){
+  for (Tower tower : towers) {
+        tower.display();
+        tower.update(enemies);
+    }
 }
 
 private void displayResources(){
@@ -120,6 +133,17 @@ private void drawEnd() {
   text("Reached Wave: " + waveManager.getWaveNumber(), width/2, height- height/4);
   
 }
+
+void drawDropedResources(){ 
+  for (int i = resources.size() - 1; i >= 0; i--) {
+        Resource resource = resources.get(i);
+        resource.update();
+        if (resource.value == 0) {
+            resources.remove(i);
+        }
+    }
+}
+
 void keyPressed() {
     player.keyPressed();
 }
@@ -129,5 +153,12 @@ void keyReleased() {
 }
 
 void mousePressed(){
-  player.mousePressed();
+  if(currentState == GameState.GAME) {
+    if(!waveManager.waveInProgress && player.resources >= 50) { // Example cost
+      towers.add(new Tower(mouseX, mouseY));
+      player.resources -= 50;
+  }else{
+    player.mousePressed();
+  }
+}
 }

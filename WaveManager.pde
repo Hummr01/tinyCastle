@@ -56,4 +56,8 @@ class WaveManager {
     int getWaveNumber(){
         return waveNumber; 
     }
+
+    boolean getWaveInProgress(){
+        return this.waveInProgress;
+    }
 }
