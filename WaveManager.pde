@@ -41,7 +41,26 @@ class WaveManager {
     }
 
     int getEnemyLevel() {
-        return waveNumber > 5 ? 1 : 0;
+        int spawnPossibility;
+        if(waveNumber < 5){
+            return 0; 
+        } if(waveNumber == 5 || waveNumber < 10){
+            // Sets spawn possibility to 33% level 1 enemies 66% Level 0; 
+            spawnPossibility = (int) random(0,10);
+            return spawnPossibility < 3 ? 1 : 0;
+        } else{
+            spawnPossibility = (int) random(0,100);
+            // 50% Level 0
+            if(spawnPossibility < 50){
+                return 0;
+                // 30% Level 1
+            } if(spawnPossibility >=50 || spawnPossibility < 80){
+                return 1;
+                // 20% Level 2
+            } else{
+                return 2;
+            }
+        }
     }
 
     int getRemainingTime() {

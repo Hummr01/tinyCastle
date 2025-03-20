@@ -7,6 +7,7 @@ class Enemy{
     int size = 10;
     boolean destroyed = false;
     int resources; 
+    color c = color(255, 0, 0);
     
 
     Enemy(int level) {
@@ -15,12 +16,22 @@ class Enemy{
         switch (level) 
         {
         case 1:
-            this.health = 40; 
-            this.damage = 20; 
+            this.health = 30; 
+            this.damage = 8; 
             this.speed = 1.5; 
-            int size = 15;
+            this.size = 25;
+            this.resources = (int) random(3,9);
+            this.c = color(255, 0, 255);
             break;
-        
+        case 2:
+            this.health = 40;
+            this.damage = 15;
+            this.speed = 1.9;
+            this.size = 30; 
+            this.resources = (int) random(8, 13);
+            this.c = color(0);
+            break;
+            
         default:
             this.resources = (int)random(1, 5);
             this.speed = 1; 
@@ -63,7 +74,7 @@ class Enemy{
     }
 
     void display(){
-        fill(255,0,0);
+        fill(c);
         ellipse(this.x, this.y, this.size, this.size);
     }
     
