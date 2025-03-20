@@ -4,9 +4,11 @@ ArrayList<Tower> towers;
 ArrayList<Resource> resources; 
 Player player;
 Base base;
+Highscore highscore;
 enum GameState { MENU, GAME, END };
 GameState currentState = currentState = GameState.MENU;
 boolean mouseIsPressed = false;
+boolean helpIsOpen = false;
 
 
 
@@ -14,6 +16,7 @@ void setup() {
     size(800, 600);
     player = new Player(width/2, height/2+40);
     base = new Base(1);
+    highscore = new Highscore();
     waveManager = new WaveManager();
     enemies = new ArrayList<>();
     towers = new ArrayList<Tower>();
@@ -52,7 +55,7 @@ void processEnemies() {
 void update(GameState currentState) {
    switch (currentState) {
     case MENU:
-      drawEnd();
+      drawMenu();
       break;
     case GAME:
       player.update();
@@ -98,7 +101,7 @@ private void drawMenu() {
   float buttonWidth = 200;
   float buttonHeight = 50;
 
-  // Button Background
+    // Button Background
   fill(100, 150, 200);
   rect(buttonX, buttonY, buttonWidth, buttonHeight, 10);
 
@@ -125,6 +128,40 @@ private void drawMenu() {
       mouseY > buttonY && mouseY < buttonY + buttonHeight) {
     currentState = GameState.GAME;
   }
+
+  float helpButtonSize = 60;
+  float helpButtonX = width-90;
+  float helpButtonY = height-90;
+  
+  noFill();
+  rectMode(CORNER);
+  rect(helpButtonX, helpButtonY, helpButtonSize, helpButtonSize);
+  textAlign(CENTER,CENTER);
+  fill(0);
+  textSize(34);
+  text("?", helpButtonX+helpButtonSize/2, helpButtonY+helpButtonSize/2);
+  if(mousePressed &&
+    mouseX > helpButtonX && mouseX < helpButtonX+helpButtonSize &&
+    mouseY > helpButtonY && mouseY < helpButtonY+helpButtonSize){
+      displayHelp();
+    }
+}
+
+private void displayHelp(){
+  String helpText = "W - Move up\nS - Move down\nA - Move Left\nD - Move Right\n Left/Right Mousebutton - Shoot\n E - Place Tower(cost 50)\n\n";
+  String hintText = "HINT: You can upgrade you can build between wave. \nUpgrade(25) the tower by clicking on them";
+  rectMode(CENTER);
+  fill(255);
+  float helpBoxX = width/2;
+  float helpBoxY = height/2;
+  rect(helpBoxX, helpBoxY, width-width*0.2, height-height*0.2);
+  fill(0);
+  text(helpText, helpBoxX, helpBoxY);
+
+  textSize(25);
+  text(hintText, helpBoxX, helpBoxY+height*0.2);
+
+
 }
 
 private void drawEnd() {
@@ -170,6 +207,8 @@ private void drawEnd() {
     restartGame();
     currentState = GameState.GAME;
   }
+  highscore.keyPressed();
+  highscore.display();
 }
 
 void drawDropedResources(){ 
@@ -188,6 +227,7 @@ void keyPressed() {
 
 void keyReleased() {
     player.keyReleased();
+    highscore.keyReleased();
 }
 
 void mousePressed(){
@@ -201,9 +241,10 @@ void mouseReleased() {
       if(mouseIsPressed){
             // Check for tower clicks (upgrades)
             for (Tower tower : towers) {
-                if (dist(mouseX, mouseY, tower.x, tower.y) < tower.size && player.resources >= 50) { // Example cost
+              
+                if (dist(mouseX, mouseY, tower.x, tower.y) < tower.size && player.resources >= 25) { // Check if Player has enough ressources
                     tower.upgrade();
-                    player.resources -= 30;
+                    player.resources -= 25;
                     break; 
                 }
             }
@@ -215,6 +256,7 @@ void mouseReleased() {
   }
   mouseIsPressed = false;
 }
+
 
 void restartGame(){
     player = new Player(width/2, height/2+40);
